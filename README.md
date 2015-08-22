@@ -13,5 +13,5 @@ Usage: echo '{"foo":"bar"}' | ./push --account=janesmith --project_id=magic-form
 ```
 
 ## Requirements
-- Node.js
+- Node.js v0.12.x
 
