@@ -1,0 +1,33 @@
+{
+  "name": "opk-cli--cloudstitch-google-sheets",
+  "version": "0.0.1",
+  "description": "Command line client for pushing data to a Google Sheet via the Cloudstitch API",
+  "main": "push",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "request": "^2.61.0",
+    "split": "^1.0.0",
+    "is-json": "^1.2.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openpipekit/opk-cli--cloudstitch-google-sheets.git"
+  },
+  "keywords": [
+    "iot",
+    "google-sheets",
+    "cloudstitch"
+  ],
+  "author": "R.J. Steinert",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/openpipekit/opk-cli--cloudstitch-google-sheets/issues"
+  },
+  "homepage": "https://github.com/openpipekit/opk-cli--cloudstitch-google-sheets#readme"
+}

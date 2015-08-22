@@ -1,0 +1,87 @@
+#!/usr/bin/env node
+
+var http = require('http') 
+var split = require('split')
+var options = parseArgv(process.argv)
+var isJson = require('is-json')
+var request = require('request')
+
+var exitSignal = false
+var data 
+
+if (options.hasOwnProperty('help')) {
+  help()
+  process.exit(0)
+}
+
+process.stdin.on('error', function(e) {
+  console.log("error: "+e)
+})
+
+process.stdin.pipe(split())
+  .on('data', function (line) {
+    data = line
+    if (data !== '')
+      push()
+  })
+
+process.stdin.on('end', function() {
+  exitSignal = true 
+})
+
+function push() {
+  log('data: ' + data)
+  var jsonFormatted = isJson(data)
+  var path = 'http://api.cloudstitch.com/' + options.account + '/' + options.project_id + '/datasources/sheet'
+  log('path is ' + path)
+  if (jsonFormatted === true) {
+    log('Posting JSON')
+    request.post(path, {form:JSON.parse(data)})
+      if (exitSignal === true) process.exit(0)
+  } 
+  else {
+    log('Posting simple value')
+    request.post(path, {form:{"value": data}})
+      if (exitSignal === true) process.exit(0)
+  }
+}
+
+function help() {
+  console.log('./push')
+  console.log('  --account <account> Example: janesmith')
+  console.log('  --project_id <project_id> Example: magic-form-7')
+  console.log('  --stream Accept streaming piped data that delimits pushes by line breaks')
+  console.log('  --verbose Use for debug output')
+  console.log('')
+  console.log('Example: push --verbose --account=janesmith --project_id=magic-form-7')
+  console.log('')
+}
+
+// This is the standard function for parsing process.argv. It will return
+// an object that where `--argumentName` is a property name and the
+// proceding argument is the value. If there is no proceeding value then
+// it will be interpreted as a boolean true.
+function parseArgv(argv) {
+  params = {}
+  argv.forEach(function(arg, i) {
+    if (arg.substr(0, 2) == '--') {
+      paramName = arg.substr(2, arg.length)
+      nextArg = argv[i+1]
+      if (typeof nextArg == 'string' && nextArg.substr(0, 2) == '--') {
+        params[paramName] = true
+      }
+      else {
+        params[paramName] = nextArg
+      }
+    }
+  })
+  return params
+}
+
+// A log function that will only log if the --verbose flag is set
+function log(msg) {
+  if (params.hasOwnProperty('verbose')) {
+    console.log(msg)
+  }
+}
+
