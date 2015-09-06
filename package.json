@@ -1,15 +1,16 @@
 {
   "name": "opk-cli--cloudstitch-google-sheets",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Command line client for pushing data to a Google Sheet via the Cloudstitch API",
   "main": "push",
   "directories": {
     "test": "test"
   },
   "dependencies": {
+    "is-json": "^1.2.5",
+    "moment": "^2.10.6",
     "request": "^2.61.0",
-    "split": "^1.0.0",
-    "is-json": "^1.2.5"
+    "split": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {

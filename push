@@ -2,6 +2,7 @@
 
 var http = require('http') 
 var split = require('split')
+var moment = require('moment')
 var options = parseArgv(process.argv)
 var isJson = require('is-json')
 var request = require('request')
@@ -34,16 +35,16 @@ function push() {
   var jsonFormatted = isJson(data)
   var path = 'http://api.cloudstitch.com/' + options.account + '/' + options.project_id + '/datasources/sheet'
   log('path is ' + path)
-  if (jsonFormatted === true) {
-    log('Posting JSON')
-    request.post(path, {form:JSON.parse(data)})
-      if (exitSignal === true) process.exit(0)
-  } 
-  else {
-    log('Posting simple value')
-    request.post(path, {form:{"value": data}})
-      if (exitSignal === true) process.exit(0)
+  var packet = {}
+  if (isJson(data)) {
+    packet = JSON.parse(data)
   }
+  else {
+    packet.value = data
+  }
+  packet.timestamp = moment().format()
+  request.post(path, {form:packet})
+  if (exitSignal === true) process.exit(0)
 }
 
 function help() {
