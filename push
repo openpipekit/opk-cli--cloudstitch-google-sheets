@@ -56,10 +56,14 @@ function push() {
   })
   if (sanitized == true) log(packet)
   request.post(path, {form:packet}, function(err,httpResponse,body){ 
-    if (err) console.log(err)
-    log(httpResponse)
-    log(body)
-    if (exitSignal === true) process.exit(0)
+    if (err) { 
+      console.log(err)
+      process.exit(1)
+    }
+    else {
+      log(httpResponse)
+      if (exitSignal === true) process.exit(0)
+    }
   })
 }
 
