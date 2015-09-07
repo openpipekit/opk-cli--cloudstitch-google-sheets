@@ -3,6 +3,7 @@
 var http = require('http') 
 var split = require('split')
 var moment = require('moment')
+var _ = require('underscore')
 var options = parseArgv(process.argv)
 var isJson = require('is-json')
 var request = require('request')
@@ -43,8 +44,23 @@ function push() {
     packet.value = data
   }
   packet.timestamp = moment().format()
-  request.post(path, {form:packet})
-  if (exitSignal === true) process.exit(0)
+  // Sanitize number columns as they don't work well in Google Sheets / Cloud Stitch
+  var keys = _.keys(packet)
+  var sanitized = false
+  keys.forEach(function(key) {
+    if (!isNaN(key)) {
+      packet['column' + key] = packet[key] 
+      delete packet[key]
+      sanitized = true
+    }
+  })
+  if (sanitized == true) log(packet)
+  request.post(path, {form:packet}, function(err,httpResponse,body){ 
+    if (err) console.log(err)
+    log(httpResponse)
+    log(body)
+    if (exitSignal === true) process.exit(0)
+  })
 }
 
 function help() {
