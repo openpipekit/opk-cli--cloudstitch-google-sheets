@@ -19,3 +19,7 @@ Usage: echo '{"foo":"bar"}' | ./push --account=janesmith --project_id=magic-form
 - To jump to the last entry in a sheet (useful for seeing the latest entries in large data sets.)
   - Mac: ⌘ + Down arrow. 
   - Windows: Ctrl + Down arrow.
+- Google spreadsheets can store 2 million cells. This can store:
+  - 1 sensor every 10 minutes for 38 years
+  - 4 senors every 5 minutes for 4.75 years
+  - 225 sensors every 1 hour for 1 year
