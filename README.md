@@ -15,3 +15,7 @@ Usage: echo '{"foo":"bar"}' | ./push --account=janesmith --project_id=magic-form
 ## Requirements
 - Node.js v0.12.x
 
+## Notes
+- To jump to the last entry in a sheet (useful for seeing the latest entries in large data sets.)
+  - Mac: ⌘ + Down arrow. 
+  - Windows: Ctrl + Down arrow.
