@@ -34,7 +34,7 @@ process.stdin.on('end', function() {
 function push() {
   log('data: ' + data)
   var jsonFormatted = isJson(data)
-  var path = 'http://api.cloudstitch.com/' + options.account + '/' + options.project_id + '/datasources/sheet'
+  var path = 'http:' + options.url
   log('path is ' + path)
   var packet = {}
   if (isJson(data)) {
@@ -69,13 +69,10 @@ function push() {
 
 function help() {
   console.log('./push')
-  console.log('  --account <account> Example: janesmith')
-  console.log('  --project_id <project_id> Example: magic-form-7')
-  console.log('  --stream Accept streaming piped data that delimits pushes by line breaks')
+  console.log('  --url <url> Example: //api.cloudstitch.com/janesmith/magic-form-20/datasources/sheet')
   console.log('  --verbose Use for debug output')
   console.log('')
-  console.log('Usage: echo 42 | push --account=janesmith --project_id=magic-form-7')
-  console.log('Usage: echo \'{"foo":"bar"}\' | ./push --account=janesmith --project_id=magic-form-7')
+  console.log('Usage: echo \'{"foo":"bar"}\' | ./push --url=//api.cloudstitch.com/janesmith/magic-form-20/datasources/sheet')
   console.log('')
 }
 
