@@ -43,7 +43,15 @@ function push() {
   else {
     packet.value = data
   }
-  packet.timestamp = moment().format()
+ 
+  var format
+  if (options.format) {
+    format = options.format
+  }
+  else { 
+    format = 'YYYY-MM-DD HH:MM:SS'
+  }
+  packet.timestamp = moment().format(format)
   // Sanitize number columns as they don't work well in Google Sheets / Cloud Stitch
   var keys = _.keys(packet)
   var sanitized = false
@@ -71,8 +79,9 @@ function help() {
   console.log('./push')
   console.log('  --url <url> Example: //api.cloudstitch.com/janesmith/magic-form-20/datasources/sheet')
   console.log('  --verbose Use for debug output')
+  console.log('  --format format string, see momentjs')
   console.log('')
-  console.log('Usage: echo \'{"foo":"bar"}\' | ./push --url=//api.cloudstitch.com/janesmith/magic-form-20/datasources/sheet')
+  console.log('Usage: echo \'{"foo":"bar"}\' | ./push --url //api.cloudstitch.com/janesmith/magic-form-20/datasources/sheet')
   console.log('')
 }
 
