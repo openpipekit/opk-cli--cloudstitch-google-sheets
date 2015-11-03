@@ -49,7 +49,7 @@ function push() {
     format = options.format
   }
   else { 
-    format = 'YYYY-MM-DD HH:MM:SS'
+    format = 'YYYY-MM-DD HH:mm:ss'
   }
   packet.timestamp = moment().format(format)
   // Sanitize number columns as they don't work well in Google Sheets / Cloud Stitch
